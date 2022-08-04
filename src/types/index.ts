@@ -10,9 +10,14 @@ export interface IProgramInfo {
   }
 }
 
+export interface ICube {
+  colors: number[]
+  nodes: number[]
+  index: number[]
+}
+
 export interface IBuffers {
-  color: WebGLBuffer
-  square: WebGLBuffer
-  cube: WebGLBuffer
-  indexs: WebGLBuffer
+  colors: WebGLBuffer
+  nodes: WebGLBuffer
+  index: WebGLBuffer
 }

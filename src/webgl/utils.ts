@@ -11,7 +11,7 @@ interface AttribPointerOptions {
   offset?: number
 }
 
-export function bindBuffer(
+export function addVertexAttribPointer(
   gl: WebGLRenderingContext,
   buffer: WebGLBuffer,
   options: AttribPointerOptions

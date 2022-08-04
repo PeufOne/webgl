@@ -1,7 +1,7 @@
 import { mat4 } from 'gl-matrix'
 
 import { IBuffers, IProgramInfo } from '../types'
-import { degToRad, bindBuffer } from './utils'
+import { degToRad, addVertexAttribPointer } from './utils'
 
 let cubeRotation = 0
 
@@ -31,17 +31,16 @@ export function drawScene(
   mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation, [0, 0, 1])
   mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation * 1, [1, 1, 0])
 
-  bindBuffer(gl, buffers.cube, {
+  addVertexAttribPointer(gl, buffers.nodes, {
     index: programInfo.attribLocations.vertexPosition,
     numComponents: 3,
   })
-
-  bindBuffer(gl, buffers.color, {
+  addVertexAttribPointer(gl, buffers.colors, {
     index: programInfo.attribLocations.vertexColor,
     numComponents: 4,
   })
 
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.indexs)
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.index)
 
   gl.useProgram(programInfo.program)
 
