@@ -7,6 +7,7 @@ export function initBuffers(gl: WebGLRenderingContext): IBuffers {
     colors: addArrayBuffer(gl, cube.colors),
     nodes: addArrayBuffer(gl, cube.nodes),
     index: addElementsArrayBuffer(gl, cube.index),
+    texture: addArrayBuffer(gl, cube.texture),
   }
 }
 
@@ -58,20 +59,24 @@ function getCube(): ICube {
   ]
 
   const colors = [
-    [1.0, 1.0, 1.0, 1.0], // Face avant : blanc
-    [1.0, 0.0, 0.0, 1.0], // Face arrière : rouge
-    [0.0, 1.0, 0.0, 1.0], // Face supérieure : vert
-    [0.0, 0.0, 1.0, 1.0], // Face inférieure : bleu
-    [1.0, 1.0, 0.0, 1.0], // Face droite : jaune
-    [1.0, 0.0, 1.0, 1.0], // Face gauche : violet
+    [1, 1, 1, 1], // Face avant : blanc
+    [1, 0, 0, 1], // Face arrière : rouge
+    [0, 1, 0, 1], // Face supérieure : vert
+    [0, 0, 1, 1], // Face inférieure : bleu
+    [1, 1, 0, 1], // Face droite : jaune
+    [1, 0, 1, 1], // Face gauche : violet
   ]
 
   const getTriangles = (i: number) => [i, i + 1, i + 2, i, i + 2, i + 3]
   const index = [...Array(6)].map((_, i) => getTriangles(i * 4)).flat()
 
+  const textureFace = [0, 0, 1, 0, 1, 1, 0, 1]
+  const texture = [...Array(6)].map(() => textureFace).flat()
+
   return {
     nodes: nodes.flat(2),
     colors: colors.map((c) => [c, c, c, c]).flat(2),
     index,
+    texture,
   }
 }

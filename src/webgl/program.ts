@@ -24,7 +24,7 @@ export function initShaderProgram(
     program: shaderProgram,
     attribLocations: {
       vertexPosition: gl.getAttribLocation(shaderProgram, 'aVertexPosition'),
-      vertexColor: gl.getAttribLocation(shaderProgram, 'aVertexColor'),
+      textureCoord: gl.getAttribLocation(shaderProgram, 'aTextureCoord'),
     },
     uniformLocations: {
       projectionMatrix: gl.getUniformLocation(
@@ -32,6 +32,7 @@ export function initShaderProgram(
         'uProjectionMatrix'
       ),
       modelViewMatrix: gl.getUniformLocation(shaderProgram, 'uModelViewMatrix'),
+      uSampler: gl.getUniformLocation(shaderProgram, 'uSampler'),
     },
   }
 

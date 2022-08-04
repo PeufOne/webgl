@@ -1,7 +1,9 @@
 import './style.css'
 import { initShaderProgram } from './webgl/program'
-import { initBuffers } from './webgl/buffer'
+import { initBuffers } from './webgl/cube'
 import { drawScene } from './webgl/draw'
+import { loadTexture } from './webgl/texture'
+import logoUrl from '../public/JavaScript-logo.png'
 
 const container = document.querySelector<HTMLDivElement>('#app')!
 setup(container)
@@ -21,12 +23,13 @@ export function setup(container: HTMLDivElement) {
 function createRender(gl: WebGLRenderingContext) {
   const programInfo = initShaderProgram(gl)!
   const buffers = initBuffers(gl)
+  const texture = loadTexture(gl, logoUrl)
   let then = 0
   function render(now: number) {
     now *= 0.001
     const deltaTime = now - then
     then = now
-    drawScene(gl, programInfo, buffers, deltaTime)
+    drawScene(gl, programInfo, buffers, texture, deltaTime)
     requestAnimationFrame(render)
   }
   return render

@@ -9,6 +9,7 @@ export function drawScene(
   gl: WebGLRenderingContext,
   programInfo: IProgramInfo,
   buffers: IBuffers,
+  texture: WebGLTexture | null,
   deltaTime: number
 ) {
   cubeRotation += deltaTime
@@ -29,16 +30,19 @@ export function drawScene(
   const modelViewMatrix = mat4.create()
   mat4.translate(modelViewMatrix, modelViewMatrix, [-0, 0, -6])
   mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation, [0, 0, 1])
-  mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation * 1, [1, 1, 0])
+  mat4.rotate(modelViewMatrix, modelViewMatrix, cubeRotation * 0.7, [1, 0, 0])
 
   addVertexAttribPointer(gl, buffers.nodes, {
     index: programInfo.attribLocations.vertexPosition,
     numComponents: 3,
   })
-  addVertexAttribPointer(gl, buffers.colors, {
-    index: programInfo.attribLocations.vertexColor,
-    numComponents: 4,
+  addVertexAttribPointer(gl, buffers.texture, {
+    index: programInfo.attribLocations.textureCoord,
+    numComponents: 2,
   })
+
+  gl.activeTexture(gl.TEXTURE0)
+  gl.bindTexture(gl.TEXTURE_2D, texture)
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffers.index)
 
@@ -55,6 +59,9 @@ export function drawScene(
     modelViewMatrix
   )
 
-  // gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+  gl.activeTexture(gl.TEXTURE0)
+  gl.bindTexture(gl.TEXTURE_2D, texture)
+  gl.uniform1i(programInfo.uniformLocations.uSampler, 0)
+
   gl.drawElements(gl.TRIANGLES, 36, gl.UNSIGNED_SHORT, 0)
 }
